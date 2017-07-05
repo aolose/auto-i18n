@@ -1,20 +1,21 @@
 /**
  * @author Aolose
  * @email i@aolose.cc
- * @description 自动替换和生成i18n文件
+ * @description 自动替换和生成i18n文件 ps：一定要备份好文件啊
  */
 const fs = require('fs')
 const path = require('path')
 const http = require('http');
 const queryStr = require('querystring');
 const md5 = require('md5')
-const elementLang = path.resolve(__dirname, './node_modules/element-ui/lib/locale/lang')
 const i18nPath = path.resolve(__dirname, 'src', 'i18n') // 你的ii18n文件夹
 const i18nLangPath = path.resolve(i18nPath, 'langs') // i18n 语言文件目录
-const pagePath = path.resolve(__dirname, 'src', 'page') // 我项目里需要翻译的文件目录
-const cmpPath = path.resolve(__dirname, 'src', 'components') // 我项目里需要翻译的文件目录
-const langs = fs.readdirSync(elementLang)
+// 注意翻译的目标路径不要把 node_modules 也包含进去了 
+const pagePath = path.resolve(__dirname, 'src', 'page') // 例子 项目里需要翻译的文件目录
+const cmpPath = path.resolve(__dirname, 'src', 'components') // 例子 项目里需要翻译的文件目录
 
+// 左边是element的文件命名 右边是百度翻译的语言文件命名
+// 这里列出了都有的语言
 const langMap = {
   'zh-CN': 'zh',//中文
   'en': 'en',//英语
@@ -63,6 +64,8 @@ if (mapFileExist) Object.assign(vkMap, JSON.parse(fs.readFileSync(mapFilePath)))
 
 /**
  * 文本内容中的中文将会被替换$t(xxx)
+ * 对应vue文件 js文件 以及js内的jsx （好想吐槽为什么在vue里还要jsx
+ * 正则表达式按自己需求调整吧 我这里的并不完美
  * @param str 文件文本
  * @return {*}
  */
@@ -155,6 +158,8 @@ function updateLangFile(path, kv) {
     str += `\n\t${k} : '${v}', // ${text}`
   });
   str += '\n}'
+  // 这里执行文件内容替换了
+  // 可以注释掉然后控制台打印试试
   fs.writeFileSync(path, str)
 }
 
@@ -177,6 +182,7 @@ function translateAndSave(lang, next) {
     if (next) next();
     return
   }
+  // todo ： 填写你的api信息
   const appId = '<接入的API id>';
   const appKey = '<接入的密钥>';
   const sign = md5(appId + q + salt + appKey);
@@ -218,7 +224,7 @@ function translateAndSave(lang, next) {
         })
       }
       updateLangFile(langFile, kv)
-      console.log(`update file ${langFile}`)
+      console.log(`i18n file : ${langFile}`)
       if (next) next();
     })
   })
