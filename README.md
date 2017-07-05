@@ -1,6 +1,8 @@
 # auto-i18n
 一个自动提取中文调用百度API生成i18n文件的例子
+
 应对的是一个vue2的项目
+
 匆忙写的 并不精炼 
 
 ## 准备工作
@@ -27,13 +29,12 @@
 import lang from './i18n'
 // ...
 // i18n
-top.$lang = Vue.prototype.$t;// 这里并不推荐这么做 只是为了粗暴解决不在组件中的js中文 
 Vue.use(vuexI18n.plugin, store);
   const i18n = Vue.i18n;
   Object.keys(lang).forEach(k=>{
     i18n.add(k,lang[k])
 })
-top.$lang = Vue.prototype.$t;
+top.$lang = Vue.prototype.$t;// 这里并不推荐这么做 只是为了粗暴解决不在组件中的js中文 
 Vue.use(ElementUI)
 Vue.locale =_=>0
 i18n.set(i18n.locale()||'en')// 默认英语
@@ -72,4 +73,29 @@ Object.keys(elementLang).forEach(k=>{
 console.log(i18n)
 export default i18n
 
+```
+// 自动生成langs.js的例子
+```
+import l0 from './langs/zh-CN';
+import e0 from 'element-ui/lib/locale/lang/zh-CN';
+import l1 from './langs/en';
+import e1 from 'element-ui/lib/locale/lang/en';
+import l2 from './langs/ja';
+import e2 from 'element-ui/lib/locale/lang/ja';
+...
+
+export default {
+	elementLang:{
+		'zh-CN' : e0,
+		'en' : e1,
+		'ja' : e2,
+    ...
+    },
+  localLang:{
+		'zh-CN' : l0,
+		'en' : l1,
+		'ja' : l2,
+		'ko' : l3,
+    ...
+    }}
 ```
