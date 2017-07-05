@@ -22,7 +22,7 @@
 我自己用的是vuex-i18n 作为多语言的插件
 和element 搭配需要做兼容处理
 
-···
+```
 import lang from './i18n'
 // ...
 // i18n
@@ -36,11 +36,10 @@ top.$lang = Vue.prototype.$t;
 Vue.use(ElementUI)
 Vue.locale =_=>0
 i18n.set(i18n.locale()||'en')// 默认英语
-···
+```
 
 然后 i18n文件夹下index.js 文件做element 多语言文件的兼容处理
-
-···
+```
 import lang from './langs';
 
 const {elementLang,localLang} = lang;
@@ -72,4 +71,4 @@ Object.keys(elementLang).forEach(k=>{
 console.log(i18n)
 export default i18n
 
-···
+```
