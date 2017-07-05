@@ -9,10 +9,10 @@ const http = require('http');
 const queryStr = require('querystring');
 const md5 = require('md5')
 const elementLang = path.resolve(__dirname, './node_modules/element-ui/lib/locale/lang')
-const i18nPath = path.resolve(__dirname, 'src', 'i18n')
-const i18nLangPath = path.resolve(i18nPath, 'langs')
-const pagePath = path.resolve(__dirname, 'src', 'page')
-const cmpPath = path.resolve(__dirname, 'src', 'components')
+const i18nPath = path.resolve(__dirname, 'src', 'i18n') // 你的ii18n文件夹
+const i18nLangPath = path.resolve(i18nPath, 'langs') // i18n 语言文件目录
+const pagePath = path.resolve(__dirname, 'src', 'page') // 我项目里需要翻译的文件目录
+const cmpPath = path.resolve(__dirname, 'src', 'components') // 我项目里需要翻译的文件目录
 const langs = fs.readdirSync(elementLang)
 
 const langMap = {
@@ -177,8 +177,8 @@ function translateAndSave(lang, next) {
     if (next) next();
     return
   }
-  const appId = '20170630000061010';
-  const appKey = 'KAqFHnCQzJ9SZprCx0Rb';
+  const appId = '<接入的API id>';
+  const appKey = '<接入的密钥>';
   const sign = md5(appId + q + salt + appKey);
   const data = queryStr.stringify({
     q: q,
