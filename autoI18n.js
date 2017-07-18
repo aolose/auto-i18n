@@ -99,11 +99,11 @@ function pickCN(str) {
     const v = getOrCreateKey(p);
     return p0+(p? '{$t('+v+')}':p1+p+p2)+p3;
   })
-  // 标签包裹
+  // 标签包裹 JSX
   str = str.replace(/(<\w+)([^>]*?>[^<]*?)([^\x00-\xff]+[0-9a-zA-Z,.\-_ !@#$%^&*+]*[^\x00-\xff]*)/gi,(m,p0,p1,p)=>{
     if(p0.indexOf('script')!==-1)return m;
     const v = getOrCreateKey(p);
-    return p0+p1+(v?'{$t('+v+')}':p)
+    return p0+p1+(v?'{this.$t('+v+')}':p)
   })
   // 脚本当中
   str = str.replace(/(["'] *?)(\w*[^\x00-\xff]+[^'"]*)([^'"]*["'])/gi, (m, p1, p2, p3) => {
